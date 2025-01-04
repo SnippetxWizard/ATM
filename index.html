@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="atm-container">
+        <p>
+            Note:- Account Number is 12345
+        </p>
+        <h1>WELCOME TO SNIPPET-ATM</h1>
+        <div class="atm-screen">
+            <label for="account-number">ENTER YOUR ACCOUNT NUMBER</label>
+            <input type="number" id="account-number" class="input-field" placeholder="Account Number">
+            <button id="submit-account" class="atm-button">SUBMIT</button>
+
+            <div id="options" class="hidden">
+                <button class="atm-button" onclick="checkBalance()">CHECK BALANCE</button>
+                <button class="atm-button" onclick="savingAccount()">SAVING ACCOUNT</button>
+                <button class="atm-button" onclick="currentAccount()">CURRENT ACCOUNT</button>
+                <button class="atm-button" onclick="creditMoney()">CREDIT MONEY</button>
+                <button class="atm-button" onclick="debitMoney()">DEBIT MONEY</button>
+                <button class="atm-button" onclick="stopProgram()">EXIT</button>
+            </div>
+
+            <div id="output"></div>
+        </div>
+    </div>
+
+   
+    <style>
+        /* styles.css 
+        background: linear-gradient(135deg, #2c3e50, #34495e);*/
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #82c0fe, #19232d);
+            color: #ecf0f1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+
+        .atm-container {
+            text-align: center;
+            background: #2c3e50;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #bdc3c7;
+            background: #ecf0f1;
+            font-size: 1em;
+        }
+
+        .atm-button {
+            background: #027ffd;
+            color: white;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1em;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .atm-button:hover {
+            background: #004b99;
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #output {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+
+    <script>
+        let accountBalance = 100000;
+
+        document.getElementById('submit-account').addEventListener('click', () => {
+            const accountNumber = document.getElementById('account-number').value.trim();
+            if (accountNumber === "12345") {
+                document.getElementById('options').classList.remove('hidden');
+                document.getElementById('output').innerText = "Welcome! Please choose an option.";
+            } else {
+                alert('Invalid account number. Please try again.');
+            }
+        });
+
+        function checkBalance() {
+            document.getElementById('output').innerText = `Your account balance is ₹${accountBalance}`;
+        }
+
+        function savingAccount() {
+            const interest = (3 / 100) * accountBalance;
+            const newBalance = accountBalance + interest;
+            document.getElementById('output').innerText = `Savings Account: Interest added ₹${interest.toFixed(2)}. New balance: ₹${newBalance.toFixed(2)}`;
+        }
+
+        function currentAccount() {
+            document.getElementById('output').innerText = "Current Account: No interest benefits.";
+        }
+
+        function creditMoney() {
+            const amount = parseFloat(prompt('Enter the amount to credit:'));
+            if (amount > 0) {
+                accountBalance += amount;
+                document.getElementById('output').innerText = `₹${amount} credited. New balance: ₹${accountBalance}`;
+            } else {
+                alert('Invalid amount.');
+            }
+        }
+
+        function debitMoney() {
+            const amount = parseFloat(prompt('Enter the amount to debit:'));
+            if (amount > 0 && amount <= accountBalance) {
+                accountBalance -= amount;
+                document.getElementById('output').innerText = `₹${amount} debited. New balance: ₹${accountBalance}`;
+            } else {
+                alert('Invalid or insufficient funds.');
+            }
+        }
+
+        function stopProgram() {
+            document.getElementById('options').classList.add('hidden');
+            document.getElementById('output').innerText = "Thank you for using Snippet-ATM!";
+        }
+    </script>
+</body>
+</html>
